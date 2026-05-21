@@ -58,7 +58,7 @@ python build.py
 
 ## 🌐 Сайт (GitHub Pages)
 
-- Файлы сайта находятся в папке `site/`
+- Файлы сайта находятся в **корневой папке** репозитория: `index.html`, `style.css`, `icon.png`
 - После публикации лаунчер можно скачать с [GitHub Releases](https://github.com/YOUR_USERNAME/xw-launcher/releases)
 
 ## ⚠️ Дисклеймер (Соответствие EULA Mojang)
@@ -80,10 +80,10 @@ xw-launcher/
 │   ├── build.py        # Скрипт сборки .exe
 │   ├── run.py          # Точка входа
 │   └── launcher_config.json
-├── site/               # Лендинг для GitHub Pages
-│   ├── index.html
-│   ├── style.css
-│   └── icon.png
+├── index.html          # Лендинг для GitHub Pages (корень)
+├── style.css           # Стили для сайта
+├── icon.png            # Иконка для сайта
+├── .gitignore
 ├── README.md
 └── LICENSE
 ```

@@ -49,6 +49,7 @@ class GameLauncher:
                 # Убедимся, что версия установлена
                 if not minecraft_launcher_lib.utils.is_version_installed(version, self.minecraft_dir):
                     def callback(progress: dict):
+                        # Выводим прогресс загрузки в консоль (можно расширить для GUI)
                         print(f"Загрузка: {progress.get('status', '')} {progress.get('current', 0)}%")
                     minecraft_launcher_lib.install.install_minecraft_version(version, self.minecraft_dir, callback=callback)
 

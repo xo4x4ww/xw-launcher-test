@@ -32,6 +32,8 @@ def build():
         "--workpath", os.path.join(BASE_DIR, "build_temp"),
         "--specpath", os.path.join(BASE_DIR, "build_temp"),
         "--paths", os.path.join(BASE_DIR, "code", "src"),
+        "--hidden-import", "tkinter",
+        "--hidden-import", "minecraft_launcher_lib",
     ]
     
     if os.path.exists(ICON):
@@ -44,9 +46,7 @@ def build():
         cmd.extend(["--version-file", VERSION_FILE])
         print(f"  ✅ Версия из файла: {VERSION_FILE}")
     else:
-        print(f"  ⚠️ Файл версии не найден: {VERSION_FILE}")
-        # Добавляем флаг для версии через командную строку
-        cmd.extend(["--version", VERSION])
+        print(f"  ⚠️ Файл версии не найден, пропускаем")
     
     cmd.append(MAIN_SCRIPT)
     
@@ -58,12 +58,16 @@ def build():
     
     if result.returncode == 0:
         exe_path = os.path.join(BASE_DIR, "dist", f"{NAME}.exe")
-        print(f"\n✅ Готово! Файл создан: {exe_path}")
-        print(f"   Размер: {os.path.getsize(exe_path) / 1024 / 1024:.1f} MB")
+        if os.path.exists(exe_path):
+            size_mb = os.path.getsize(exe_path) / 1024 / 1024
+            print(f"\n✅ Готово! Файл создан: {exe_path}")
+            print(f"   Размер: {size_mb:.1f} MB")
+        else:
+            print(f"\n✅ Сборка завершена, но файл не найден по пути: {exe_path}")
+            print("   Проверьте папку dist/")
     else:
         print(f"\n❌ Ошибка при сборке! Код ошибки: {result.returncode}")
-        print("   Проверьте, что установлены все зависимости:")
-        print("   pip install pyinstaller minecraft-launcher-lib")
+        print("   Попробуйте удалить папки build_temp/ и dist/ и запустить снова")
 
 def setup_folders():
     """Создаёт необходимые папки, если их нет"""
@@ -78,4 +82,4 @@ if __name__ == "__main__":
     print("=" * 50)
     setup_folders()
     build()
-    print("\n💡 Совет: Скопируйте assets/icon.ico в папку assets/ для добавления иконки")
+    print("\n💡 Совет: Положите icon.ico в папку assets/ для добавления иконки в .exe")

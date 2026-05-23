@@ -1,4 +1,3 @@
-# UTF-8
 VSVersionInfo(
   ffi=FixedFileInfo(
     filevers=(0, 9, 1, 0),
@@ -17,11 +16,15 @@ VSVersionInfo(
           u'040904B0',
           [StringStruct(u'CompanyName', u'XW Team'),
           StringStruct(u'FileDescription', u'XW Minecraft Launcher'),
-          StringStruct(u'FileVersion', u'0.9.1-alpha'),
+          StringStruct(u'FileVersion', u'0.9.1.0'),
           StringStruct(u'InternalName', u'XWLauncher'),
-          StringStruct(u'LegalCopyright', u'\u00A9 2026 XW Team'),
+          StringStruct(u'LegalCopyright', u'(c) 2026 XW Team'),
           StringStruct(u'OriginalFilename', u'XWLauncher.exe'),
           StringStruct(u'ProductName', u'XW Launcher'),
-          StringStruct(u'ProductVersion', u'0.9.1-alpha')])
-      ]),
+          StringStruct(u'ProductVersion', u'0.9.1.0')]
+        )
+      ]
+    ),
     VarFileInfo([VarStruct(u'Translation', [0x0409, 0x04B0])])
+  ]
+)

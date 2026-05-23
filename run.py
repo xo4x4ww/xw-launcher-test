@@ -4,29 +4,34 @@
 import sys
 import os
 
-# Добавляем папку code/src в путь ПЕРВОЙ
+# Добавляем папку code/src в путь
 src_path = os.path.join(os.path.dirname(__file__), "code", "src")
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
-
-# Также добавляем папку code (на случай относительных импортов)
-code_path = os.path.join(os.path.dirname(__file__), "code")
-if code_path not in sys.path:
-    sys.path.insert(0, code_path)
 
 print("Пути поиска модулей:")
 for p in sys.path[:3]:
     print(f"  - {p}")
 
+# Проверяем наличие всех файлов
+required_files = ["app.py", "config.py", "minecraft.py", "ui_pages.py", "ui_widgets.py", "ui_pages_extras.py"]
+missing = []
+for file in required_files:
+    if not os.path.exists(os.path.join(src_path, file)):
+        missing.append(file)
+
+if missing:
+    print(f"❌ Отсутствуют файлы: {', '.join(missing)}")
+    input("Нажмите Enter для выхода...")
+    sys.exit(1)
+
 try:
     from app import LauncherApp
-    print("✅ Модуль app найден!")
+    print("✅ Все модули загружены!")
 except ImportError as e:
     print(f"❌ Ошибка импорта: {e}")
-    print(f"\nПроверьте, что файлы существуют:")
-    print(f"  - {os.path.join(src_path, 'app.py')}: {os.path.exists(os.path.join(src_path, 'app.py'))}")
-    print(f"  - {os.path.join(src_path, 'config.py')}: {os.path.exists(os.path.join(src_path, 'config.py'))}")
-    print(f"  - {os.path.join(src_path, 'minecraft.py')}: {os.path.exists(os.path.join(src_path, 'minecraft.py'))}")
+    import traceback
+    traceback.print_exc()
     input("\nНажмите Enter для выхода...")
     sys.exit(1)
 

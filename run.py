@@ -1,17 +1,40 @@
 #!/usr/bin/env python3
-# run.py - Точка входа для запуска лаунчера из корня проекта
+# run.py - Запуск лаунчера из корня проекта
 
 import sys
 import os
 
-# Добавляем путь к папке code/src
+# Добавляем папку code/src в путь ПЕРВОЙ
 src_path = os.path.join(os.path.dirname(__file__), "code", "src")
-sys.path.insert(0, src_path)
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
 
-from main import main
+# Также добавляем папку code (на случай относительных импортов)
+code_path = os.path.join(os.path.dirname(__file__), "code")
+if code_path not in sys.path:
+    sys.path.insert(0, code_path)
+
+print("Пути поиска модулей:")
+for p in sys.path[:3]:
+    print(f"  - {p}")
+
+try:
+    from app import LauncherApp
+    print("✅ Модуль app найден!")
+except ImportError as e:
+    print(f"❌ Ошибка импорта: {e}")
+    print(f"\nПроверьте, что файлы существуют:")
+    print(f"  - {os.path.join(src_path, 'app.py')}: {os.path.exists(os.path.join(src_path, 'app.py'))}")
+    print(f"  - {os.path.join(src_path, 'config.py')}: {os.path.exists(os.path.join(src_path, 'config.py'))}")
+    print(f"  - {os.path.join(src_path, 'minecraft.py')}: {os.path.exists(os.path.join(src_path, 'minecraft.py'))}")
+    input("\nНажмите Enter для выхода...")
+    sys.exit(1)
+
+def main():
+    import tkinter as tk
+    root = tk.Tk()
+    app = LauncherApp(root)
+    root.mainloop()
 
 if __name__ == "__main__":
-    print("=" * 50)
-    print("XW Launcher v0.9.1-alpha")
-    print("=" * 50)
     main()

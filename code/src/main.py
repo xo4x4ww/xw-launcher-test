@@ -7,7 +7,14 @@ import os
 # Добавляем текущую папку в путь для импортов
 sys.path.insert(0, os.path.dirname(__file__))
 
-from app import LauncherApp
+try:
+    from app import LauncherApp
+except ImportError as e:
+    print(f"Ошибка импорта: {e}")
+    print(f"Текущая директория: {os.getcwd()}")
+    print(f"Путь к файлам: {os.path.dirname(__file__)}")
+    input("Нажмите Enter для выхода...")
+    sys.exit(1)
 
 def main():
     root = tk.Tk()
